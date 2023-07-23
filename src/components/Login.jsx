@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { AccountContext, accounts } from "../App";
 import { useContext } from "react";
+import Button from "./Button";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -9,15 +10,16 @@ export default function Login() {
 
   return (
     <form
-      className="flex flex-col"
+      className="flex flex-col gap-4 max-w-md bg-gray-200 p-8 rounded-3xl mx-auto"
       onSubmit={(e) => {
         e.preventDefault();
         let result;
-        accounts.forEach((account) => {
+        for (const account of accounts) {
           if (account.email === email) {
             result = account;
+            break;
           }
-        });
+        }
         if (result) {
           if (result.password === password) {
             setAccount(result);
@@ -37,7 +39,7 @@ export default function Login() {
         Kata sandi
         <input type="password" onChange={(e) => setPassword(e.target.value)} />
       </label>
-      <button>Login</button>
+      <Button>Login</Button>
     </form>
   );
 }

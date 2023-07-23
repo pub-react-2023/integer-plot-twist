@@ -10,6 +10,60 @@ label {
   @apply flex flex-col;
 
   > input {
-    @apply border border-black;
+    @apply border border-black h-10;
+  }
+}
+
+body {
+  & .button {
+    height: 40px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    &:not(.icon-button) {
+      min-width: 96px;
+      padding-inline: 24px;
+
+      > svg {
+        margin-left: -4px;
+      }
+    }
+
+    &.icon-button {
+      width: 40px;
+    }
+
+    &.button-filled {
+      background-color: #005ac2;
+      color: white;
+
+      &:hover {
+        background-color: #005ac2ee;
+      }
+    }
+
+    &.button-tonal {
+      background-color: #005ac222;
+      color: #141b2c;
+
+      &:hover {
+        background-color: #005ac233;
+      }
+    }
+
+    &:disabled {
+      background-color: #005ac222 !important;
+      cursor: not-allowed;
+    }
+
+    > svg {
+      font-size: large;
+    }
   }
 }
