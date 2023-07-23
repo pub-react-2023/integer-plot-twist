@@ -5,3 +5,11 @@
 .tombol {
   @apply bg-blue-500 text-white px-6 h-[41px] rounded-full;
 }
+
+label {
+  @apply flex flex-col;
+
+  > input {
+    @apply border border-black;
+  }
+}
