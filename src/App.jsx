@@ -43,10 +43,7 @@ export default function App() {
     },
   ]);
 
-  const [account, setAccount] = useState({
-    name: "",
-    email: "",
-  });
+  const [account, setAccount] = useState();
 
   return (
     <AccountContext.Provider value={{ account, setAccount }}>

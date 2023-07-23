@@ -2,8 +2,11 @@ import { useState } from "react";
 import Account from "./Account";
 import Button from "./Button";
 import { BsPersonCircle } from "react-icons/bs";
+import { useContext } from "react";
+import { AccountContext } from "../App";
 
 export default function Header() {
+  const { account } = useContext(AccountContext);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
 
   return (
@@ -13,10 +16,19 @@ export default function Header() {
         <Button>Beranda</Button>
         <Button>Tentang</Button>
       </nav>
-      <div className="relative">
-        <BsPersonCircle onClick={() => setIsAccountOpen(!isAccountOpen)} />
-        {isAccountOpen && <Account />}
-      </div>
+      {account ? (
+        <div className="relative">
+          <BsPersonCircle
+            size={32}
+            onClick={() => setIsAccountOpen(!isAccountOpen)}
+          />
+          {isAccountOpen && (
+            <Account onLogout={() => setIsAccountOpen(false)} />
+          )}
+        </div>
+      ) : (
+        <Button>Login</Button>
+      )}
     </header>
   );
 }

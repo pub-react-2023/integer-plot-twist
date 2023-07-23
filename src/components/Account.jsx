@@ -3,7 +3,7 @@ import { AccountContext } from "../App";
 import { BsPersonCircle } from "react-icons/bs";
 import Button from "./Button";
 
-export default function Account() {
+export default function Account({ onLogout }) {
   const { account, setAccount } = useContext(AccountContext);
 
   return (
@@ -17,7 +17,14 @@ export default function Account() {
       </div>
       <div className="flex justify-between gap-4">
         <Button variant="tonal">Setelan</Button>
-        <Button onClick={() => setAccount({})}>Logout</Button>
+        <Button
+          onClick={() => {
+            setAccount();
+            onLogout();
+          }}
+        >
+          Logout
+        </Button>
       </div>
     </div>
   );
