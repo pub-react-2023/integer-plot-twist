@@ -3,8 +3,32 @@ import Product from "./components/Product";
 import Header from "./components/Header";
 import { createContext } from "react";
 import Login from "./components/Login";
+import Button from "./components/Button";
+import { useRef } from "react";
 
-export const AccountContext = createContext();
+export const strings = {
+  id: {
+    home: "Beranda",
+    about: "Tentang",
+  },
+  en: {
+    home: "Home",
+    about: "About",
+  },
+  ar: {
+    home: "بيت",
+    about: "ْعَنِّي",
+  },
+};
+
+export const AccountContext = createContext({
+  account: null,
+  setAccount: () => {},
+});
+export const LanguageContext = createContext({
+  language: null,
+  setLanguage: () => {},
+});
 
 export const accounts = [
   {
@@ -25,6 +49,14 @@ export const accounts = [
 ];
 
 export default function App() {
+  const namaRef = useRef("Romi");
+  const mahasiswaRef = useRef({
+    nama: "Iwan",
+    umur: 37,
+    angkatan: -10,
+  });
+  const inputRef = useRef(null);
+
   const [products, setProducts] = useState([
     {
       id: 1,
@@ -42,20 +74,37 @@ export default function App() {
       price: 40000000,
     },
   ]);
-
   const [account, setAccount] = useState();
+  const [language, setLanguage] = useState("id");
 
   return (
-    <AccountContext.Provider value={{ account, setAccount }}>
-      <div className="group">
-        <Header account={account} />
-        {/* <h1 className="text-center group-hover:bg-yellow-300 group-hover:text-green-700 p-2 bg-red-300 text-blue-700 text-6xl font-bold">
+    <LanguageContext.Provider value={{ language, setLanguage }}>
+      <AccountContext.Provider value={{ account, setAccount }}>
+        <input
+          ref={inputRef}
+          className="border border-black"
+          type="text"
+          onChange={(e) => (mahasiswaRef.current.nama = e.target.value)}
+        />
+        <Button onClick={() => (inputRef.current.value = "PASIM")}>
+          Ubah nilai si input
+        </Button>
+        {/* <h1 className="text-2xl">{namaRef.current.nama}</h1> */}
+        <Button onClick={() => alert(mahasiswaRef.current.nama)}>
+          Tampilkan nama
+        </Button>
+        <div className="group">
+          <Header account={account} language={language} />
+          {/* <h1 className="text-center group-hover:bg-yellow-300 group-hover:text-green-700 p-2 bg-red-300 text-blue-700 text-6xl font-bold">
         Hello, world!
       </h1> */}
-        <button>Ubah warna</button>
-        <Product {...products[0]} />
-        <Login />
-        {/* <div className="flex flex-col sm:flex-row gap-2">
+          <Button onClick={() => setLanguage("id")}>Indonesia</Button>
+          <Button onClick={() => setLanguage("en")}>English</Button>
+          <Button onClick={() => setLanguage("ar")}>Arab</Button>
+          <Button>Ubah warna</Button>
+          <Product {...products[0]} />
+          <Login />
+          {/* <div className="flex flex-col sm:flex-row gap-2">
         {products.map((product) => (
           <div key={product.id} className="bg-gray-200 rounded-3xl p-8">
             <h1>{product.name}</h1>
@@ -64,7 +113,8 @@ export default function App() {
           </div>
         ))}
       </div> */}
-      </div>
-    </AccountContext.Provider>
+        </div>
+      </AccountContext.Provider>
+    </LanguageContext.Provider>
   );
 }
